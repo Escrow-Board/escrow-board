@@ -12,6 +12,7 @@ import { Web3Storage } from "web3.storage";
 import { EscrowHub } from "../types/EscrowHub";
 import { appChain, getAddChainParameters } from "../chains";
 import { Token } from "../types/Token";
+import { useRouter } from "next/router";
 
 export const useAddress = () => {
   const [signedToken, setSignedToken] = useState<string | undefined>();
@@ -51,6 +52,7 @@ export const useAddress = () => {
 };
 
 export const useWeb3App = () => {
+  const router = useRouter()
   const { connector, account, isActivating, isActive, provider } = useWeb3React<Web3Provider>();
   const { address, saveSignedToken, removeSignedToken } = useAddress();
   const [escrowContract, setEscrowContract] = useState<EscrowHub>();
@@ -150,6 +152,7 @@ export const useWeb3App = () => {
         .promise(signPromise, {
           loading: "Signing In...",
           success: (token: string) => {
+            router.push('/')
             saveSignedToken(token);
             return <b>Signing Successful</b>;
           },

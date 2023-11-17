@@ -1,16 +1,16 @@
-import { ethers } from "ethers";
 import { useEffect, useMemo, useState } from "react";
 import { Button, Form, InputGroup, Modal } from "react-bootstrap";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useDecimalsQuery, useStoreEscrowMutation, useSymbolQuery } from "../lib/queries";
 import { NewEscrowInputs } from "../types/general";
+import { useRouter } from 'next/router'
 
 export const NewEscrow = ({ children, className }: any) => {
+	const router = useRouter()
 	const minimumEscrow = process.env.NEXT_PUBLIC_MINIMUM_ESCROW
 		? Number(process.env.NEXT_PUBLIC_MINIMUM_ESCROW)
 		: 0;
 
-	const { data: decimals } = useDecimalsQuery()
 	const { data: symbol } = useSymbolQuery()
 		
 	const { mutate: mutateStoreEscrow } = useStoreEscrowMutation()
@@ -67,7 +67,10 @@ export const NewEscrow = ({ children, className }: any) => {
 		<>
 			<button
 				className={`btn btn-warning ${className}`}
-				onClick={() => setNewEscrowModal(true)}
+				onClick={() => {
+					router.push('/create');
+					// setNewEscrowModal(true)
+				}}
 			>
 				{children??'New Escrow'}
 			</button>

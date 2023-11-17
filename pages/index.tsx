@@ -9,11 +9,40 @@ import { EscrowCardLoader } from "../components/EscrowItem";
 import { EscrowContext } from "../contexts/EscrowContext";
 import { Profile } from "../components/Profile";
 import { AllEscrows } from "../components/AllEscrows";
+import { useRouter } from 'next/router'
 
 const Index: NextPage = () => {
 	const chain = getAddChainParameters(appChain);
-	
+	const router = useRouter()
 	const { provider, address, ensName, ensAvatar, loading, isActive, escrowContract, tokenContract, logIn, logOut } = useWeb3App();
+
+
+	const isSigned = ()=>{
+
+
+		if(address && address != undefined){
+			return (
+				<>
+					<EscrowContext.Provider value={{
+							signerAddress: address,
+							escrowContract,
+							tokenContract,
+							provider,
+							ensName,
+							ensAvatar
+						}}>
+						<Profile logOut={logOut}/>
+						<AllEscrows/>
+					</EscrowContext.Provider>
+				</>
+			) 
+		}else{
+			router.push('/signin')
+			return <></>
+		}
+
+
+	}
 
 	return (
 		<div className="container main" style={{maxWidth:'80%'}}>
@@ -35,21 +64,7 @@ const Index: NextPage = () => {
 					{isActive || <SelectWallet/>}
 					{isActive && (
 						<div>
-							{address ? (
-								<>
-									<EscrowContext.Provider value={{
-											signerAddress: address,
-											escrowContract,
-											tokenContract,
-											provider,
-											ensName,
-											ensAvatar
-										}}>
-										<Profile logOut={logOut}/>
-										<AllEscrows/>
-									</EscrowContext.Provider>
-								</>
-							) : <SignIn logIn={logIn}/>}
+							{isSigned() }
 						</div>
 					)}
 				</>
