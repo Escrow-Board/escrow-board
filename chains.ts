@@ -8,6 +8,13 @@ const ETH: AddEthereumChainParameter['nativeCurrency'] = {
   decimals: 18,
 }
 
+const KLAY: AddEthereumChainParameter['nativeCurrency'] = {
+  name: 'Klayton',
+  symbol: 'KLAY',
+  decimals: 18,
+}
+ 
+
 const MATIC: AddEthereumChainParameter['nativeCurrency'] = {
   name: 'Matic',
   symbol: 'MATIC',
@@ -200,7 +207,21 @@ export const CHAINS: { [chainId: number]: BasicChainInformation | ExtendedChainI
       symbol: 'tZEN',
       decimals: 18
     }
-  }
+  },
+  1001:{
+    urls: [
+      'https://public-en-baobab.klaytn.net',
+    ],
+    name: 'Klayton Testnet',
+    nativeCurrency: {
+      name: 'KLAY',
+      symbol: 'KLAY',
+      decimals: 18
+    },
+    blockExplorerUrls: ['https://klayton.com'],
+  },
+  
+  // https://public-en-baobab.klaytn.net
 }
 
 export const URLS: { [chainId: number]: string[] } = Object.keys(CHAINS).reduce<{ [chainId: number]: string[] }>(
