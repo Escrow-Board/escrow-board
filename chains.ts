@@ -215,7 +215,7 @@ export const CHAINS: { [chainId: number]: BasicChainInformation | ExtendedChainI
     name: 'Klayton Testnet',
     nativeCurrency: {
       name: 'KLAY',
-      symbol: 'KLAY',
+      symbol: 'KLAYt',
       decimals: 18
     },
     blockExplorerUrls: ['https://klayton.com'],
