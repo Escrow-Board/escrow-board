@@ -383,7 +383,13 @@ export const useStoreEscrowMutation = () => {
 	return useMutation(
 		["storeEscrow", signerAddress],
 		(data: NewEscrowInputs) => {
-			const storeEscrow = async () => {
+			const storeEscrow = async () =>
+			{
+				try {
+					
+				} catch (error) {
+					
+				}
 				if (!escrowContract)
 					throw new Error("Escrow contract not found");
 
@@ -408,12 +414,23 @@ export const useStoreEscrowMutation = () => {
 				const expireInSeconds = Math.round(
 					new Date(data.expire_at).getTime() / 1000
 				);
-				const interaction = await escrowContract.newEscrow(
+
+				let interaction : any;
+
+				try {
+					interaction = await escrowContract.newEscrow(
 					data.sellerAddress,
-					ethers.utils.parseUnits(`${data.amount}`, decimals??18),
+					ethers.utils.parseUnits(`${data.amount}`, decimals ?? 18),
 					cid,
-					expireInSeconds
+					expireInSeconds,
+					{
+						gasLimit: 200000,
+					}
 				);
+				} catch (error) {
+					console.error("the error is  ===========>>>>>", error)
+				}
+				
 
 				return interaction.wait();
 			};
