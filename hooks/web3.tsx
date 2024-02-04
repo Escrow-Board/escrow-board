@@ -13,6 +13,7 @@ import { EscrowHub } from "../types/EscrowHub";
 import { appChain, getAddChainParameters } from "../chains";
 import { Token } from "../types/Token";
 import { useRouter } from "next/router";
+import { create } from '@web3-storage/w3up-client'
 
 export const useAddress = () => {
   const [signedToken, setSignedToken] = useState<string | undefined>();
@@ -167,4 +168,4 @@ export const useWeb3App = () => {
   return { isActive, address, ensName, ensAvatar, provider, escrowContract, tokenContract, loading, logIn, logOut };
 };
 
-export const useWeb3Storage = () => new Web3Storage({ token: process.env.NEXT_PUBLIC_WEB3_STORAGE_KEY ?? "", endpoint: new URL('https://api.web3.storage') })
+// export const useWeb3Storage = () => new Web3Storage({ token: process.env.NEXT_PUBLIC_WEB3_STORAGE_KEY ?? "", endpoint: new URL('https://web3.storage') })

@@ -15,7 +15,7 @@ import {
 } from "@ethersproject/providers";
 import { BigNumber, ContractReceipt, ethers, Event } from "ethers";
 import { EscrowDoc, EscrowMeta, NewEscrowInputs } from "../types/general";
-import { useWeb3Storage } from "../hooks/web3";
+// import { useWeb3Storage } from "../hooks/web3";
 import {
 	EscrowResponse,
 	FetchEscrowsPaginatedResponse,
@@ -377,7 +377,7 @@ export const useRefundMutation = () => {
 export const useStoreEscrowMutation = () => {
 	const queryClient = useQueryClient();
 	const { escrowContract, signerAddress } = useContext(EscrowContext);
-	const web3StorageClient = useWeb3Storage();
+	// const web3StorageClient = useWeb3Storage();
 	const { data: decimals } = useDecimalsQuery()
 
 	return useMutation(
@@ -406,10 +406,10 @@ export const useStoreEscrowMutation = () => {
 				const blob = new Blob([JSON.stringify(obj)], {
 					type: "application/json",
 				});
-				cid = await web3StorageClient.put([
-					new File([blob], "meta.json"),
-					...files,
-				]);
+				// cid = await web3StorageClient.put([
+				// 	new File([blob], "meta.json"),
+				// 	...files,
+				// ]);
 
 				const expireInSeconds = Math.round(
 					new Date(data.expire_at).getTime() / 1000
@@ -422,10 +422,11 @@ export const useStoreEscrowMutation = () => {
 					data.sellerAddress,
 					ethers.utils.parseUnits(`${data.amount}`, decimals ?? 18),
 					cid,
-					expireInSeconds,
-					{
-						gasLimit: 200000,
-					}
+					expireInSeconds
+					// ,
+					// {
+					// 	gasLimit: 200000,
+					// }
 				);
 				} catch (error) {
 					console.error("the error is  ===========>>>>>", error)
